@@ -1,0 +1,44 @@
+html
+  head
+    title  Solution Hunt Pack
+    link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous")
+    script(src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js")
+    link(rel="stylesheet" href="custom.css")
+    style.
+      body {
+      font-family: Algerian;
+      }
+  body(style="background-color : #E6E6FA")
+    .jumbotron(style="padding-bottom : 0px;")
+      h1.display-5(style="border-bottom:10px solid black;")
+        | Open Challenges
+      |   The list below contains the titles of open challenges at
+      a(href="http://tatainnoverse.com") http://tatainnoverse.com
+      p
+        | If you can't see a challenge, try refreshing the list (Press button on right).
+      form(action="/refresh" method="get")
+        button#refresh_btn.btn.btn-primary(type="submit" style="float : right;") Refresh challenge list
+    .container
+      // Content here
+      .col-md-12
+        .funkyradio
+          | Select the challenge :
+          each challenge,index in challenges
+           .funkyradio-primary
+             input(type="radio" name="challenge" id=challenge._id value=challenge._id)
+             label(for=challenge._id)= challenge.title
+        br
+        |     Select the algorithm for keyword selection (Leave default if you have no idea about it) :
+        br
+        label.radio-inline
+          input(type="radio" name="optradio")
+          | TextRank
+        br
+        label.radio-inline
+          input(type="radio" name="optradio")
+          | RAKE
+        br
+        label.radio-inline
+          input(type="radio" name="optradio" checked)
+          | Default (Both TextRank and RAKE)
+        button.btn.btn-primary.disabled(type="button" aria-disabled="true" style="float:right;") Submit

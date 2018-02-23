@@ -1,0 +1,78 @@
+<html>
+
+<head>
+  <title> Solution Hunt Pack </title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="css/custom.css">
+
+  <style>
+  body {
+    font-family: Algerian;
+  }
+  </style>
+</head>
+
+<body style="background-color : #E6E6FA">
+  <div class="jumbotron" style="padding-bottom : 0px;">
+  <h1 class="display-5" style="border-bottom:10px solid black;">
+    Open Challenges
+    <button type="button" class="btn btn-primary" style="float : right;" id="refresh_btn">Refresh challenge list</button>
+  </h1>
+  The list below contains the titles of open challenges at <a href="http://tatainnoverse.com">http://tatainnoverse.com</a>
+  <p>
+  If you can't see a challenge, try refreshing the list (Press button on right).
+  </p>
+
+  </div>
+
+  <div class="container">
+  <!-- Content here -->
+  <div class="col-md-12">
+    <div class="funkyradio">
+      Select the challenge :
+        <div class="funkyradio-primary">
+            <input type="radio" name="radio" id="radio1"/>
+            <label for="radio1">Challenge 1</label>
+        </div>
+
+        <div class="funkyradio-primary">
+          <input type="radio" name="radio" id = "radio5"/>
+          <label for="radio5">Method for online measurement of color deviation, gloss and thickness of painted coating on metal substrate</label>
+        </div>
+
+
+
+        <div class="funkyradio-primary">
+            <input type="radio" name="radio" id="radio2"/>
+            <label for="radio2">Challenge 2</label>
+        </div>
+        <div class="funkyradio-primary">
+            <input type="radio" name="radio" id="radio3"/>
+            <label for="radio3">Challenge 3</label>
+        </div>
+        <div class="funkyradio-primary">
+            <input type="radio" name="radio" id="radio4"/>
+            <label for="radio4">Challenge 4</label>
+        </div>
+    </div>
+    <br>
+    Select the algorithm for keyword selection (Leave default if you have no idea about it) :
+    <br>
+    <label class="radio-inline">
+      <input type="radio" name="optradio">TextRank
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="optradio">RAKE
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="optradio">Default (Both TextRank and RAKE)
+    </label>
+    <button class="btn btn-primary disabled" type="button" aria-disabled="true" style="float:right;">Submit</button>
+  </div>
+
+</body>
+
+
+
+</html>
