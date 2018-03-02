@@ -1,0 +1,41 @@
+html
+  head
+    title  Solution Hunt Pack
+    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css")
+    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap-theme.min.css")
+    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/css/bootstrap-slider.min.css")
+    link(rel="stylesheet" href="custom.css")
+    script(src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/bootstrap-slider.min.js")
+    style.
+      body {
+      font-family: Algerian;
+      }
+      .slider-selection {background: #BABABA; }
+  body(style="background-color : #E6E6FA")
+    .jumbotron(style="padding-bottom : 0px;")
+      h1.display-5(style="border-bottom:10px solid black;")
+        | Solution Hunt Pack
+      | Finetune the importance of keywords, and set the max time for crawling
+    .container
+      .panel.panel-primary
+        .panel-heading
+          h3.panel-title
+            | Finetune the keywords for :
+            |
+            =challenge_title
+        .panel-body
+          form(action="/final" method="post")
+            table.table
+              thead.thead-inverse
+                tr
+                  th Keyword
+                  th Importance Score
+              tbody
+                each keyword,index in keywords
+                 tr
+                   td
+                     input(name="keywords" value=keyword)
+                   td
+                     input(name=keyword+"_val" data-provide="slider" data-slider-id="ex1Slider" type="text" data-slider-min="0" data-slider-max=keywords.length data-slider-step="1" data-slider-value=keywords.length-index)
+            button.btn.btn-primary(type="submit" style="float : right; margin-top:10px;") Submit

@@ -1,0 +1,49 @@
+html
+  head
+    title  Solution Hunt Pack
+    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css")
+    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap-theme.min.css")
+    link(rel="stylesheet" href="bootstrap-tagsinput.css")
+    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rainbow/1.2.0/themes/github.css")
+    link(rel="stylesheet" href="app.css")
+    link(rel="stylesheet" href="custom.css")
+    style.
+      body {
+      font-family: Algerian;
+      }
+  body(style="background-color : #E6E6FA")
+    .jumbotron(style="padding-bottom : 0px;")
+      h1.display-5(style="border-bottom:10px solid black;")
+        | Solution Hunt Pack
+      | Below are the relevant keywords for the selected challenge
+    .container
+      .panel.panel-primary
+        .panel-heading
+          h3.panel-title
+            | Keywords for :
+            |
+            =challenge_title
+        .panel-body
+          form(action="/finetune" method="post")
+            input(name="challenge_title" style="display : none;" value=challenge_title)
+            select(multiple="" data-role="tagsinput" name="keywords")
+              each keyword,index in keywords
+                option(value=keyword style="font-size : 50px;")= keyword
+            button.btn.btn-primary(type="submit" style="float : right; margin-top:10px;") Submit
+
+      div.alert.alert-warning(role="alert")
+        | You can add more keywords to the above list(Simply click on the box above). Here are some suggestions :
+        select(multiple="" data-role="tagsinput")
+          each other_keyword,index in other_keywords
+            option(value=other_keyword style="font-size : 50px;" name='other_keywords')= other_keyword
+
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js")
+    script(src="bootstrap-tagsinput.min.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/rainbow/1.2.0/js/rainbow.min.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/rainbow/1.2.0/js/language/generic.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/rainbow/1.2.0/js/language/html.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/rainbow/1.2.0/js/language/javascript.js")
+    script(src="assets/app.js")
+    script(src="assets/app_bs3.js")

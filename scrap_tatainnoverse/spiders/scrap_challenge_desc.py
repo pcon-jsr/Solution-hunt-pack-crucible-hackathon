@@ -2,7 +2,7 @@
 import scrapy
 #from scrap_tatainnoverse.items import ScrapTatainnoverseItem
 from scrapy.crawler import CrawlerProcess
-
+import re
 
 class ScrapChallengeDescSpider(scrapy.Spider):
     name = 'scrap_challenge_desc'
@@ -14,12 +14,27 @@ class ScrapChallengeDescSpider(scrapy.Spider):
             #yield { (challenge_link.split("="))[1] : challenge_link}
             yield scrapy.Request(self.base_url+challenge_link, callback = self.parse_desc)
     def parse_desc(self, response):
-        desc = response.xpath(".//*[@id='singlechallengedesc']").xpath("string()").extract()
+        description = response.xpath(".//*[@id='singlechallengedesc']").xpath("string()").extract()
         title = response.css("div.container h1::text").extract_first()
-    	res = {}
+        desc = description[0]
+        desc = desc.replace("\n", " ")
+        desc = desc.replace("\t", "")
+        desc = desc.replace("\r", "")
+        desc = desc.lstrip()
+        desc = desc.rstrip()
+        desc = re.sub(r'[\(\[].*?[\)\]]', "", desc)
+        desc = desc.replace("[", "")
+        desc = desc.replace("]", "")
+        desc = desc.replace("(", "")
+        desc = desc.replace(")", "")
+        desc = re.sub(r'\\[a-z, 0-9]*', "", desc)
+        desc = re.sub(r'[0-9]*', "", desc)
+        desc = re.sub(r'http[a-z,:,/,.,-]*', "",  desc)
+        res = {}
     	res["_id"] = (response.url.split("="))[1]
-    	res["content"] = desc[0]
+    	res["content"] = desc
         res["title"] = title
+        print res
         yield res
 
 '''process = CrawlerProcess({

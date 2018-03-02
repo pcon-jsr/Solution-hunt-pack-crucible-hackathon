@@ -1,5 +1,6 @@
 @import('https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.0/css/bootstrap.min.css')
 
+
 .funkyradio div {
   clear: both;
   overflow: hidden;
@@ -64,3 +65,10 @@
   color: #fff;
   background-color: #337ab7;
 }
+
+
+.label{border-radius: 4px;
+padding: 2px;
+margin: 3px;}
+
+.label-info{background-color:#5bc0de}
