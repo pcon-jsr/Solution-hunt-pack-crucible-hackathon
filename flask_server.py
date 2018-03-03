@@ -14,15 +14,12 @@ def refresh():
     '''process = CrawlerRunner( get_project_settings() )
     process.crawl('scrap_challenge_desc')
     process.start()'''
-    subprocess.check_output(['scrapy', 'crawl', 'scrap_challenge_desc'])
+    subprocess.check_output(['scrapy', 'crawl', 'spider1'])
     return ""
 
 @app.route("/keywords", methods=['POST'])
 def keywords():
     #print request.get_json()
-    stop_words = []
-    with open('FoxStoplist.txt') as f:
-        stop_words.append(f.readline())
     arg = request.get_json()
     r = Rake()
     r.extract_keywords_from_text(arg['content'])

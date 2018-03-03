@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Scrapy settings for scrap_tatainnoverse project
+# Scrapy settings for crawlers project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -9,18 +9,18 @@
 #     https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'scrap_tatainnoverse'
+BOT_NAME = 'crawlers'
 
-SPIDER_MODULES = ['scrap_tatainnoverse.spiders']
-NEWSPIDER_MODULE = 'scrap_tatainnoverse.spiders'
-LOG_ENABLED = False
+SPIDER_MODULES = ['crawlers.spiders']
+NEWSPIDER_MODULE = 'crawlers.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'scrap_tatainnoverse (+http://www.yourdomain.com)'
+#USER_AGENT = 'crawlers (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
+LOG_ENABLED = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
@@ -48,13 +48,13 @@ ROBOTSTXT_OBEY = True
 # Enable or disable spider middlewares
 # See https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 #SPIDER_MIDDLEWARES = {
-#    'scrap_tatainnoverse.middlewares.ScrapTatainnoverseSpiderMiddleware': 543,
+#    'crawlers.middlewares.CrawlersSpiderMiddleware': 543,
 #}
 
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 #DOWNLOADER_MIDDLEWARES = {
-#    'scrap_tatainnoverse.middlewares.ScrapTatainnoverseDownloaderMiddleware': 543,
+#    'crawlers.middlewares.CrawlersDownloaderMiddleware': 543,
 #}
 
 # Enable or disable extensions
@@ -65,11 +65,9 @@ ROBOTSTXT_OBEY = True
 
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
-ITEM_PIPELINES = {
-    'scrap_tatainnoverse.pipelines.JsonWriterPipeline': 300,
-    'scrap_tatainnoverse.pipelines.MongoPipeline': 600,
-
-}
+#ITEM_PIPELINES = {
+#    'crawlers.pipelines.CrawlersPipeline': 300,
+#}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html

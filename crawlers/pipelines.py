@@ -7,6 +7,7 @@
 
 import json
 import pymongo
+from scrapy.exceptions import DropItem
 
 class MongoPipeline(object):
 
@@ -27,19 +28,15 @@ class MongoPipeline(object):
         self.db[self.collection_name].insert(dict(item))
         return item
 
-class JsonWriterPipeline(object):
-
-    def open_spider(self, spider):
-        self.file = open('items.json', 'w')
-
-    def close_spider(self, spider):
-        self.file.close()
-
+class ValidatePipeline(object):
     def process_item(self, item, spider):
-        line = json.dumps(dict(item)) + "\n"
-        self.file.write(line)
-        return item
+        if("http" in item['url']):
+            return item
+        else:
+            raise DropItem()
 
-class ScrapTatainnoversePipeline(object):
+
+
+class CrawlersPipeline(object):
     def process_item(self, item, spider):
         return item
