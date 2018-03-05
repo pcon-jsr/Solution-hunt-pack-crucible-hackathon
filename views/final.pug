@@ -1,0 +1,171 @@
+html
+  head
+    title  Solution Hunt Pack
+    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css")
+    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap-theme.min.css")
+    link(rel="stylesheet" href="bootstrap-tagsinput.css")
+    link(rel="stylesheet" href="custom.css")
+    style.
+      body {
+      font-family: Algerian;
+      }
+      .bootstrap-tagsinput {
+        border: none;
+        box-shadow: none;
+      }
+      .bootstrap-tagsinput .tag [data-role="remove"] {
+        margin-left: 8px;
+        cursor: pointer;
+        display: none;
+      }
+      .breadcrumb {
+          padding: 0px;
+          background: transparent;
+          list-style: none;
+          overflow: hidden;
+          margin-top: 20px;
+          margin-bottom: 20px;
+          border-radius: 4px;
+      }
+
+      .breadcrumb>li {
+          display: table-cell;
+          vertical-align: top;
+          width: 1%;
+      }
+
+      .breadcrumb>li+li:before {
+          padding: 0;
+      }
+
+      .breadcrumb li a {
+          color: white;
+          text-decoration: none;
+          padding: 10px 0 10px 45px;
+          position: relative;
+          display: inline-block;
+          width: calc( 100% - 10px );
+          background-color: hsla(0, 0%, 83%, 1);
+          text-align: center;
+          text-transform: capitalize;
+      }
+
+      .breadcrumb li.completed a {
+          background: brown;
+          background: hsla(153, 57%, 51%, 1);
+      }
+
+      .breadcrumb li.completed a:after {
+          border-left: 30px solid hsla(153, 57%, 51%, 1);
+      }
+
+      .breadcrumb li.active a {
+          background: #46b8da;
+      }
+
+      .breadcrumb li.active a:after {
+          border-left: 30px solid #46b8da;
+      }
+
+      .breadcrumb li:first-child a {
+          padding-left: 15px;
+      }
+
+      .breadcrumb li:last-of-type a {
+          width: calc( 100% - 38px );
+      }
+
+      .breadcrumb li a:before {
+          content: " ";
+          display: block;
+          width: 0;
+          height: 0;
+          border-top: 50px solid transparent;
+          border-bottom: 50px solid transparent;
+          border-left: 30px solid white;
+          position: absolute;
+          top: 50%;
+          margin-top: -50px;
+          margin-left: 1px;
+          left: 100%;
+          z-index: 1;
+      }
+
+      .breadcrumb li a:after {
+          content: " ";
+          display: block;
+          width: 0;
+          height: 0;
+          border-top: 50px solid transparent;
+          border-bottom: 50px solid transparent;
+          border-left: 30px solid hsla(0, 0%, 83%, 1);
+          position: absolute;
+          top: 50%;
+          margin-top: -50px;
+          left: 100%;
+          z-index: 2;
+      }
+
+  body(style="background-color : #E6E6FA")
+    .jumbotron(style="padding-bottom : 0px; background-color:rgba(0,0,0,.075);  margin-bottom: 0px;  padding-top:10px;")
+      h1.display-5(style="border-bottom:10px solid black;")
+        | Solution Hunt Pack
+      | Yay!! Finally here are the results you wanted
+    ul.breadcrumb(style="margin-top:0px; width:100%")
+      li.completed
+        a
+          strong
+            | Step 1
+          | : Select the challenge
+      li.completed
+        a
+          strong
+            | Step 2
+          | : Select Keywords
+      li.completed
+        a
+          strong
+            | Step 3
+          | : Finetune
+      li.active
+        a
+          strong
+            | Step 4
+          | : Results
+    .container
+      .panel.panel-primary
+        .panel-heading
+          h3.panel-title
+            | Results for :
+            |
+            =challenge_title
+          =results.length
+          |   results crawled
+        .panel-body
+          each result,index in results
+            .offer.offer-success
+              .shape
+                .shape-text
+                  | Score :
+                  = result.score
+              .offer-content
+                strong
+                  a(href=result.url target="_blank")
+                    =result.title
+                  br
+                  =result.description
+                  br
+                  select(multiple="" data-role="tagsinput" name="tags")
+                    each tag,index in result.tags
+                      option(value=tag)= tag
+                    option(value=result.type) =result.type
+
+
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js")
+    script(src="final-bootstrap-tagsinput.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/rainbow/1.2.0/js/rainbow.min.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/rainbow/1.2.0/js/language/generic.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/rainbow/1.2.0/js/language/html.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/rainbow/1.2.0/js/language/javascript.js")

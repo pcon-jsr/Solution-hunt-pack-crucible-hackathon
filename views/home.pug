@@ -9,18 +9,129 @@ html
       body {
       font-family: Algerian;
       }
+      .breadcrumb {
+          padding: 0px;
+          background: transparent;
+          list-style: none;
+          overflow: hidden;
+          margin-top: 20px;
+          margin-bottom: 20px;
+          border-radius: 4px;
+      }
+
+      .breadcrumb>li {
+          display: table-cell;
+          vertical-align: top;
+          width: 1%;
+      }
+
+      .breadcrumb>li+li:before {
+          padding: 0;
+      }
+
+      .breadcrumb li a {
+          color: white;
+          text-decoration: none;
+          padding: 10px 0 10px 45px;
+          position: relative;
+          display: inline-block;
+          width: calc( 100% - 10px );
+          background-color: hsla(0, 0%, 83%, 1);
+          text-align: center;
+          text-transform: capitalize;
+      }
+
+      .breadcrumb li.completed a {
+          background: brown;
+          background: hsla(153, 57%, 51%, 1);
+      }
+
+      .breadcrumb li.completed a:after {
+          border-left: 30px solid hsla(153, 57%, 51%, 1);
+      }
+
+      .breadcrumb li.active a {
+          background: #46b8da;
+      }
+
+      .breadcrumb li.active a:after {
+          border-left: 30px solid #46b8da;
+      }
+
+      .breadcrumb li:first-child a {
+          padding-left: 15px;
+      }
+
+      .breadcrumb li:last-of-type a {
+          width: calc( 100% - 38px );
+      }
+
+      .breadcrumb li a:before {
+          content: " ";
+          display: block;
+          width: 0;
+          height: 0;
+          border-top: 50px solid transparent;
+          border-bottom: 50px solid transparent;
+          border-left: 30px solid white;
+          position: absolute;
+          top: 50%;
+          margin-top: -50px;
+          margin-left: 1px;
+          left: 100%;
+          z-index: 1;
+      }
+
+      .breadcrumb li a:after {
+          content: " ";
+          display: block;
+          width: 0;
+          height: 0;
+          border-top: 50px solid transparent;
+          border-bottom: 50px solid transparent;
+          border-left: 30px solid hsla(0, 0%, 83%, 1);
+          position: absolute;
+          top: 50%;
+          margin-top: -50px;
+          left: 100%;
+          z-index: 2;
+      }
+
   body(style="background-color : #E6E6FA")
-    .jumbotron(style="padding-bottom : 0px;")
-      h1.display-5(style="border-bottom:10px solid black;")
+    .jumbotron(style="padding-bottom : 0px; background-color:rgba(0,0,0,.075); margin-bottom: 0px; padding-top:10px;")
+      h1(style="border-bottom:10px solid black;")
         | Solution Hunt Pack
       | The list below contains the titles of open challenges at
+      |
       a(href="http://tatainnoverse.com") http://tatainnoverse.com
       br
       | If you can't see a challenge, try refreshing the list (Press button on right).
       br
-      form(action="/refresh" method="get")
-        button#refresh_btn.btn.btn-primary(type="submit" style="float : right; margin-top:20px") Refresh challenge list
+    ul.breadcrumb(style="margin-top:0px; width:100%")
+      li.active
+        a
+          strong
+            | Step 1
+          | : Select the challenge
+      li
+        a
+          strong
+            | Step 2
+          | : Select Keywords
+      li
+        a
+          strong
+            | Step 3
+          | : Finetune
+      li
+        a
+          strong
+            | Step 4
+          | : Results
+
     .container
+      form(action="/refresh" method="get")
+        button#refresh_btn.btn.btn-success(type="submit" style="float : right; margin-top:20px") Refresh challenge list
       form(action="/keywords" method="post")
        .col-md-12
          .funkyradio

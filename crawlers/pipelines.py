@@ -30,7 +30,7 @@ class MongoPipeline(object):
 
 class ValidatePipeline(object):
     def process_item(self, item, spider):
-        if("http" in item['url']):
+        if("http" in item['url'] and 'tatainnoverse' not in item['url']):
             return item
         else:
             raise DropItem()

@@ -19,12 +19,36 @@ class Spider2Spider(scrapy.Spider):
 
     def __init__(self, query=None, *args, **kwargs):
         super(Spider2Spider, self).__init__(*args, **kwargs)
-        self.start_urls = ['http://www.google.co.in/search?q=%s' % query]
+        self.queries = query.split(",")
+        self.points = {}
+        point  = len(self.queries)
+        for q in self.queries:
+            self.points[q] = point
+            point = point - 1
+        for i in range(len(self.queries)):
+            for j in range(i+1,len(self.queries)):
+                self.start_urls.append('http://www.google.co.in/search?q=%s' % self.queries[i]+'  '+self.queries[j])
+        #self.start_urls = ['http://www.google.co.in/search?q=%s' % query]
 
     def parse(self, response):
-        urls = response.css("div.g h3.r a::attr(href)").extract()
+        urls = response.css("h3.r a::attr(href)").extract()
+        titles = response.xpath(".//h3[@class='r']").xpath("string()").extract()
         descriptions = response.xpath(".//span[@class='st']").xpath("string()").extract()
-        for url,desc in zip(urls, descriptions):
-            parsed_url = _parse_url(url)
+        for url,desc,title in zip(urls, descriptions,titles):
+            parsed_url = url
             desc = desc.replace("\n", " ")
-            yield {'orignal url' : url, 'url' : parsed_url, 'description' : desc}
+            tag_str = urlparse(response.url).query
+            tag_str = tag_str.split("&")
+            tag_str = tag_str[0]
+            tag_str = tag_str[2:]
+            tag_str = tag_str.replace("%20"," ")
+            tags = tag_str.split("  ")
+            point = self.points[tags[0]] * self.points[tags[1]]
+            typ = "Webpage"
+            if("pdf" in url):
+                typ = "Document"
+            elif("youtube" in url):
+                typ = "Youtube video"
+            elif("wikipedia" in url):
+                typ = "Wiki"
+            yield {'search url' : response.url, 'url' : parsed_url, 'description' : desc, 'tags' : tags, 'title' : title, 'type' : typ, 'score' : point}

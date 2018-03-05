@@ -21,6 +21,15 @@ NEWSPIDER_MODULE = 'crawlers.spiders'
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
 LOG_ENABLED = False
+CONCURRENT_REQUESTS = 1
+DOWNLOAD_DELAY = 3
+# USER_AGENT = 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
+DOWNLOADER_MIDDLEWARES = {
+    'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
+    'scrapy_fake_useragent.middleware.RandomUserAgentMiddleware': 400,
+}
+
+FAKEUSERAGENT_FALLBACK = "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/27.0.1453.93 Safari/537.36"
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32

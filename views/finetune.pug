@@ -12,11 +12,121 @@ html
       font-family: Algerian;
       }
       .slider-selection {background: #BABABA; }
+      .breadcrumb {
+          padding: 0px;
+          background: transparent;
+          list-style: none;
+          overflow: hidden;
+          margin-top: 20px;
+          margin-bottom: 20px;
+          border-radius: 4px;
+      }
+
+      .breadcrumb>li {
+          display: table-cell;
+          vertical-align: top;
+          width: 1%;
+      }
+
+      .breadcrumb>li+li:before {
+          padding: 0;
+      }
+
+      .breadcrumb li a {
+          color: white;
+          text-decoration: none;
+          padding: 10px 0 10px 45px;
+          position: relative;
+          display: inline-block;
+          width: calc( 100% - 10px );
+          background-color: hsla(0, 0%, 83%, 1);
+          text-align: center;
+          text-transform: capitalize;
+      }
+
+      .breadcrumb li.completed a {
+          background: brown;
+          background: hsla(153, 57%, 51%, 1);
+      }
+
+      .breadcrumb li.completed a:after {
+          border-left: 30px solid hsla(153, 57%, 51%, 1);
+      }
+
+      .breadcrumb li.active a {
+          background: #46b8da;
+      }
+
+      .breadcrumb li.active a:after {
+          border-left: 30px solid #46b8da;
+      }
+
+      .breadcrumb li:first-child a {
+          padding-left: 15px;
+      }
+
+      .breadcrumb li:last-of-type a {
+          width: calc( 100% - 38px );
+      }
+
+      .breadcrumb li a:before {
+          content: " ";
+          display: block;
+          width: 0;
+          height: 0;
+          border-top: 50px solid transparent;
+          border-bottom: 50px solid transparent;
+          border-left: 30px solid white;
+          position: absolute;
+          top: 50%;
+          margin-top: -50px;
+          margin-left: 1px;
+          left: 100%;
+          z-index: 1;
+      }
+
+      .breadcrumb li a:after {
+          content: " ";
+          display: block;
+          width: 0;
+          height: 0;
+          border-top: 50px solid transparent;
+          border-bottom: 50px solid transparent;
+          border-left: 30px solid hsla(0, 0%, 83%, 1);
+          position: absolute;
+          top: 50%;
+          margin-top: -50px;
+          left: 100%;
+          z-index: 2;
+      }
   body(style="background-color : #E6E6FA")
-    .jumbotron(style="padding-bottom : 0px;")
+    .jumbotron(style="padding-bottom : 0px; background-color:rgba(0,0,0,.075);  margin-bottom: 0px;  padding-top:10px;")
       h1.display-5(style="border-bottom:10px solid black;")
         | Solution Hunt Pack
       | Finetune the importance of keywords, and set the max time for crawling
+
+    ul.breadcrumb(style="margin-top:0px; width:100%")
+      li.completed
+        a
+          strong
+            | Step 1
+          | : Select the challenge
+      li.completed
+        a
+          strong
+            | Step 2
+          | : Select Keywords
+      li.active
+        a
+          strong
+            | Step 3
+          | : Finetune
+      li
+        a
+          strong
+            | Step 4
+          | : Results
+
     .container
       .panel.panel-primary
         .panel-heading
@@ -25,7 +135,14 @@ html
             |
             =challenge_title
         .panel-body
-          form(action="/final" method="post")
+          div.alert.alert-success#timer_body(role="alert" style="display:none; white-space: nowrap; overflow: hidden;")
+            |Hang on!! Spiders are crawling the web. Your results will be ready in
+            |
+            strong
+              span#timer(style="white-space: nowrap; overflow: horizontal-align:center") 00
+              |   seconds
+          form#finetune_form(action="/final" method="post" style="display:block;")
+            input(name="challenge_title" style="display : none;" value=challenge_title)
             table.table
               thead.thead-inverse
                 tr
@@ -39,5 +156,34 @@ html
                        = keyword
                      input(name="keywords" value=keyword style="display:none;")
                    td
-                     input(name=keyword+"_val" data-provide="slider" data-slider-id="ex1Slider" type="text" data-slider-min="0" data-slider-max=keywords.length data-slider-step="1" data-slider-value=keywords.length-index)
-            button.btn.btn-primary(type="submit" style="float : right; margin-top:10px;") Submit
+                     input(name=keyword+"_val" data-provide="slider" data-slider-id="ex1Slider" type="text" data-slider-min="1" data-slider-max=keywords.length data-slider-step="1" data-slider-value=keywords.length-index)
+
+            strong
+              | Set Time limit :
+            input#time_limit(name="time_slider" data-provide="slider" data-slider-id="ex1Slider" type="text" data-slider-min="5" data-slider-max=60 data-slider-step="1" data-slider-value=10)
+            br
+            | Ideal time to crawl results per keyword : 3 seconds
+            button.btn.btn-primary#submit_button(type="submit" style="float : right; margin-top:10px;" onclick="start_timer()") Submit
+    script(type="text/javascript").
+
+      function start_timer(){
+      document.getElementById('timer').innerHTML = document.getElementById('time_limit').value;
+      document.getElementById('finetune_form').style.display = "none";
+      document.getElementById('timer_body').style.display = "block"; };
+      var timeoutHandle;
+      function count() {
+      var startTime = document.getElementById('timer').innerHTML;
+      var seconds = startTime;
+      var time = new Date();    time.setHours(00);
+      time.setMinutes(00);
+      time.setSeconds(parseInt(seconds));
+      var timedif;
+      if(seconds!="00")
+      timedif = new Date(time.valueOf() - 1000);
+      else
+      timedif = new Date(time.valueOf());
+      var newtime = timedif.toTimeString()[6] + timedif.toTimeString()[7];
+      document.getElementById('timer').innerHTML=newtime;
+      timeoutHandle=setTimeout(count, 1000);
+      }
+      count();
