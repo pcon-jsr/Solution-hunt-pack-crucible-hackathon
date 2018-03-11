@@ -97,7 +97,7 @@ html
           z-index: 2;
       }
 
-  body(style="background-color : #E6E6FA")
+  body()
     .jumbotron(style="padding-bottom : 0px; background-color:rgba(0,0,0,.075); margin-bottom: 0px; padding-top:10px;")
       h1(style="border-bottom:10px solid black;")
         | Solution Hunt Pack
@@ -131,17 +131,27 @@ html
 
     .container
       form(action="/refresh" method="get")
-        button#refresh_btn.btn.btn-success(type="submit" style="float : right; margin-top:20px") Refresh challenge list
-      form(action="/keywords" method="post")
-       .col-md-12
-         .funkyradio
-           | Select the challenge :
-           each challenge,index in challenges
-            .funkyradio-primary
-              input(type="radio" name="challenge" id=challenge._id value=challenge._id required onclick="change_button(this,'submit_btn')")
-              label(for=challenge._id)= challenge.title
-         br
-         button.btn.btn-primary(id="submit_btn" type="submit" style="float:right;" disabled="true") Submit
+        button#refresh_btn.btn.btn-success(type="submit" style="float : right; margin-top:20px")
+          | Refresh challenge list
+          |
+          span.glyphicon.glyphicon-refresh(aria-hidden="true")
+      if challenges.length
+        form(action="/keywords" method="post")
+          .col-md-12
+            .funkyradio
+              | Select the challenge :
+              each challenge,index in challenges
+               .funkyradio-primary
+                 input(type="radio" name="challenge" id=challenge._id value=challenge._id required onclick="change_button(this,'submit_btn')")
+                 label(for=challenge._id)= challenge.title
+            br
+          button.btn.btn-primary(id="submit_btn" type="submit" style="float:right;" disabled="true") Submit
+      else
+        br
+        br
+        br
+        div.alert.alert-warning(role="alert")
+          | Could not load challenges. Try refreshing the list.
       script.
         function change_button(challenge, button_id){
         document.getElementById(button_id).disabled = "";

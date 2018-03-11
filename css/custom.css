@@ -74,7 +74,7 @@
 
 
 .shape{
-	border-style: solid; border-width: 0 90px 50px 0; float:right; height: 0px; width: 0px;
+	border-style: solid; border-width: 0 120px 80px 0; float:right; height: 0px; width: 0px;
 	-ms-transform:rotate(0deg); /* IE 9 */
 	-o-transform: rotate(0deg);  /* Opera 10.5 */
 	-webkit-transform:rotate(0deg); /* Safari and Chrome */
@@ -118,11 +118,11 @@
 }
 
 .shape-text{
-	color:#fff; font-size:12px; font-weight:bold; position:relative; right:-40px; top:2px; white-space: nowrap;
-	-ms-transform:rotate(30deg); /* IE 9 */
+	color:#fff; font-size:14px; font-weight:bold; position:relative; right:-40px; top:10px; left:40px; white-space: nowrap;
+	-ms-transform:rotate(34deg); /* IE 9 */
 	-o-transform: rotate(360deg);  /* Opera 10.5 */
-	-webkit-transform:rotate(30deg); /* Safari and Chrome */
-	transform:rotate(30deg);
+	-webkit-transform:rotate(34deg); /* Safari and Chrome */
+	transform:rotate(34deg);
 }
 .offer-content{
 	padding:0 20px 10px;

@@ -126,11 +126,20 @@ html
           | : Results
 
     .container
+      .panel.panel-default
+        .panel-heading
+          h3.panel-title
+            | Challenge Description :
+            a(href=url taget="_blank")
+            =challenge_title
+        .panel-body
+          !=html
       .panel.panel-primary
         .panel-heading
           h3.panel-title
             | Keywords for :
             |
+            a(href=url taget="_blank")
             =challenge_title
         .panel-body
           form(action="/finetune" method="post")
@@ -138,10 +147,11 @@ html
             select(multiple="" data-role="tagsinput" name="keywords")
               each keyword,index in keywords
                 option(value=keyword style="font-size : 50px;")= keyword
+            | Click on box above to add more keywords.
             button.btn.btn-primary(type="submit" style="float : right; margin-top:10px;") Submit
 
       div.alert.alert-warning(role="alert")
-        | You can add more keywords to the above list(Simply click on the box above). Here are some suggestions :
+        | You can add more keywords to the above list. Here are some suggestions :
         select(multiple="" data-role="tagsinput")
           each other_keyword,index in other_keywords
             option(value=other_keyword style="font-size : 50px;" name='other_keywords')= other_keyword

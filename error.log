@@ -1,0 +1,26 @@
+2018-03-12 00:56:01 +05:30
+[SyntaxError: Unexpected end of input]
+2018-03-12 00:58:21 +05:30
+{ [Error: ENOENT: no such file or directory, open 'temp/hi8atkeywtpb.json']
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'temp/hi8atkeywtpb.json' }
+2018-03-12 01:00:26 +05:30
+{ [Error: ENOENT: no such file or directory, open 'temp/wj2pnk5v3rvu.json']
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'temp/wj2pnk5v3rvu.json' }
+2018-03-12 01:23:31 +05:30
+[SyntaxError: Unexpected end of input]
+2018-03-12 01:28:14 +05:30
+[SyntaxError: Unexpected end of input]
+2018-03-12 01:31:30 +05:30
+[SyntaxError: Unexpected end of input]
+2018-03-12 01:31:49 +05:30
+[SyntaxError: Unexpected end of input]
+2018-03-12 01:32:27 +05:30
+[SyntaxError: Unexpected end of input]
+2018-03-12 01:33:45 +05:30
+[SyntaxError: Unexpected end of input]

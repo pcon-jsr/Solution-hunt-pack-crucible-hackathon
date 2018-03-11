@@ -124,7 +124,7 @@ app.post("/keywords", function(req, res) {
             var keywords = body.split("||")
             var top_keywords = keywords[0].split(",,")
             var other_keywords = keywords[1].split(",,")
-            res.render('keywords', {challenge_title : challenge["title"] , keywords : top_keywords, other_keywords : other_keywords});
+            res.render('keywords', {challenge_title : challenge["title"] , keywords : top_keywords, other_keywords : other_keywords, challenge_url :challenge["url"], html : challenge["html"]});
           }
         });
       }

@@ -2,6 +2,7 @@
 import scrapy
 from urlparse import urljoin, urlparse, parse_qsl
 import re
+from math import sqrt
 
 def _parse_url(href):
     queries = dict(parse_qsl(urlparse(href).query))
@@ -21,6 +22,7 @@ class Spider2Spider(scrapy.Spider):
         super(Spider2Spider, self).__init__(*args, **kwargs)
         self.queries = query.split(",")
         self.points = {}
+        self.n_queries = len(self.queries)
         point  = len(self.queries)
         for q in self.queries:
             self.points[q] = point
@@ -43,7 +45,7 @@ class Spider2Spider(scrapy.Spider):
             tag_str = tag_str[2:]
             tag_str = tag_str.replace("%20"," ")
             tags = tag_str.split("  ")
-            point = self.points[tags[0]] * self.points[tags[1]]
+            point = 100 * sqrt(self.points[tags[0]] * self.points[tags[1]])/(self.n_queries)
             typ = "Webpage"
             if("pdf" in url):
                 typ = "Document"
@@ -51,4 +53,4 @@ class Spider2Spider(scrapy.Spider):
                 typ = "Youtube video"
             elif("wikipedia" in url):
                 typ = "Wiki"
-            yield {'search url' : response.url, 'url' : parsed_url, 'description' : desc, 'tags' : tags, 'title' : title, 'type' : typ, 'score' : point}
+            yield {'search url' : response.url, 'url' : parsed_url, 'description' : desc, 'tags' : tags, 'title' : title, 'type' : typ, 'score' : round(point,1)}

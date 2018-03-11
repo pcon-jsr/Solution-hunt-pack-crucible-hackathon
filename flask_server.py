@@ -8,15 +8,20 @@ import random
 import string
 from datetime import datetime
 import timeit
+import textacy
+from textacy import keyterms
+from collections import Counter
+import operator
+#import spacy
+#spacy.load('en_core_web_sm')
+
+temp = textacy.Doc(unicode('temp') , lang=unicode('en_core_web_sm'))
 
 app = Flask(__name__)
 
 
 @app.route("/refresh", methods=['GET'])
 def refresh():
-    '''process = CrawlerRunner( get_project_settings() )
-    process.crawl('scrap_challenge_desc')
-    process.start()'''
     subprocess.check_output(['scrapy', 'crawl', 'spider1'])
     return ""
 
@@ -45,37 +50,33 @@ def final():
 
     print elapsed/len(keyword_scores)
 
+    #subprocess.call(['timeout',time_limit,'scrapy', 'crawl', 'spider2', '-a', 'query='+concatenated_keywords, '-o', 'temp/'+file_name+'.json'])
     return file_name
 
 @app.route("/keywords", methods=['POST'])
 def keywords():
     #print request.get_json()
     arg = request.get_json()
-    r = Rake()
-    r.extract_keywords_from_text(arg['content'])
-    content_keywords = r.get_ranked_phrases()
-    r.extract_keywords_from_text(arg['title'])
-    title_keywords = r.get_ranked_phrases()
-    top_keywords = ""
-    n_keywords = 10
-    for i in range(2):
-        top_keywords = top_keywords + title_keywords[i] + ",,"
-    for i in range(n_keywords):
-        if(i==n_keywords-1):
-            top_keywords  = top_keywords + content_keywords[i]
+    doc = textacy.Doc(arg['content'] , metadata = {'title' : arg['title']}, lang=unicode('en_core_web_sm'))
+    sgrank_keywords = dict(keyterms.sgrank(doc))
+    singlerank_keywords = dict(keyterms.singlerank(doc))
+    textrank_keywords = dict(keyterms.textrank(doc))
+    sgrank_keywords.update((x, y*0.80) for x, y in sgrank_keywords.items())
+    textrank_keywords.update((x, y*0.05) for x, y in textrank_keywords.items())
+    singlerank_keywords.update((x, y*0.15) for x, y in singlerank_keywords.items())
+    keywords = res = dict(Counter(sgrank_keywords) + Counter(textrank_keywords) + Counter(singlerank_keywords))
+    sorted_keywords = sorted(keywords.items(), key=operator.itemgetter(1), reverse=True)
+    keyword_string = ""
+
+    for i,key in enumerate(sorted_keywords):
+        if(i==len(sorted_keywords)/2):
+            keyword_string = keyword_string + "||"
+        if(i==len(sorted_keywords)-1):
+            keyword_string = keyword_string + key[0]
         else:
-            top_keywords  = top_keywords + content_keywords[i] + ",,"
+            keyword_string = keyword_string + key[0] + ",,"
 
-    top_keywords  = top_keywords + "||"
-
-    for i in range(n_keywords, n_keywords + 10):
-        if(i == n_keywords + 9 or i == len(content_keywords)-1):
-            top_keywords = top_keywords + content_keywords[i]
-            break
-        else:
-            top_keywords  = top_keywords + content_keywords[i] + ",,"
-
-    return top_keywords
+    return keyword_string
 
 
 
