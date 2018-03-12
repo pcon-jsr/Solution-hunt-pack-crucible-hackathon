@@ -16,6 +16,7 @@ class Spider2Spider(scrapy.Spider):
         'ITEM_PIPELINES': {
             'crawlers.pipelines.ValidatePipeline': 300,
             }
+
         }
 
     def __init__(self, query=None, *args, **kwargs):
@@ -27,6 +28,8 @@ class Spider2Spider(scrapy.Spider):
         for q in self.queries:
             self.points[q] = point
             point = point - 1
+        if(self.n_queries>=3):
+            self.start_urls.append('http://www.google.co.in/search?q=%s' % self.queries[0]+'  '+self.queries[1]+'  '+self.queries[2])
         for i in range(len(self.queries)):
             for j in range(i+1,len(self.queries)):
                 self.start_urls.append('http://www.google.co.in/search?q=%s' % self.queries[i]+'  '+self.queries[j])
@@ -45,7 +48,11 @@ class Spider2Spider(scrapy.Spider):
             tag_str = tag_str[2:]
             tag_str = tag_str.replace("%20"," ")
             tags = tag_str.split("  ")
-            point = 100 * sqrt(self.points[tags[0]] * self.points[tags[1]])/(self.n_queries)
+            point = 0
+            if(len(tags)==3):
+                point = 100 * (self.points[tags[0]] + self.points[tags[1]] + self.points[tags[2]] +2)/(3.0 * self.n_queries)
+            else:
+                point = 100 * (self.points[tags[0]] + self.points[tags[1]])/(2.0 * self.n_queries)
             typ = "Webpage"
             if("pdf" in url):
                 typ = "Document"

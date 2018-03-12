@@ -118,7 +118,7 @@
 }
 
 .shape-text{
-	color:#fff; font-size:14px; font-weight:bold; position:relative; right:-40px; top:10px; left:40px; white-space: nowrap;
+	color:#fff; font-size:14px; font-weight:bold; position:relative; right:-40px; top:5px; left:40px; white-space: nowrap;
 	-ms-transform:rotate(34deg); /* IE 9 */
 	-o-transform: rotate(360deg);  /* Opera 10.5 */
 	-webkit-transform:rotate(34deg); /* Safari and Chrome */

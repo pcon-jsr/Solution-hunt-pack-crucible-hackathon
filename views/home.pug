@@ -101,7 +101,7 @@ html
     .jumbotron(style="padding-bottom : 0px; background-color:rgba(0,0,0,.075); margin-bottom: 0px; padding-top:10px;")
       h1(style="border-bottom:10px solid black;")
         | Solution Hunt Pack
-      | The list below contains the titles of open challenges at
+      | The list below contains the list of all challenges at
       |
       a(href="http://tatainnoverse.com") http://tatainnoverse.com
       br
@@ -139,13 +139,28 @@ html
         form(action="/keywords" method="post")
           .col-md-12
             .funkyradio
-              | Select the challenge :
+              | Open challenges :
               each challenge,index in challenges
-               .funkyradio-primary
-                 input(type="radio" name="challenge" id=challenge._id value=challenge._id required onclick="change_button(this,'submit_btn')")
-                 label(for=challenge._id)= challenge.title
+               if challenge.status === 'open'
+                 .funkyradio-primary
+                   input(type="radio" name="challenge" id=challenge._id value=challenge._id required onclick="change_button(this,'submit_btn')")
+                   label(for=challenge._id)= challenge.title
+              br
+              br
+              input(type='checkbox' id='show_past_check' value="0" onchange="toggle_past()")
+              |
+              | Show past challenges
+              br
+              br
+              div(style="display : none;" id="past_challenges")
+                | Past challenges :
+                each challenge,index in challenges
+                 if challenge.status === 'past'
+                   .funkyradio-primary
+                     input(type="radio" name="challenge" id=challenge._id value=challenge._id required onclick="change_button(this,'submit_btn')")
+                     label(for=challenge._id)= challenge.title
             br
-          button.btn.btn-primary(id="submit_btn" type="submit" style="float:right;" disabled="true") Submit
+          button.btn.btn-primary(id="submit_btn" type="submit" style="float:right; margin-bottom : 20px" disabled="true") Submit
       else
         br
         br
@@ -155,4 +170,16 @@ html
       script.
         function change_button(challenge, button_id){
         document.getElementById(button_id).disabled = "";
+        }
+        function toggle_past(){
+        var check_box = document.getElementById("show_past_check");
+        if(check_box.checked)
+        {
+        document.getElementById("past_challenges").style.display = "block";
+        }
+        else
+        {
+        document.getElementById("past_challenges").style.display = "none";
+        }
+
         }
