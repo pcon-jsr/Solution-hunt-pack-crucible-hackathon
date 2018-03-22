@@ -98,32 +98,39 @@ html
           z-index: 2;
       }
 
+      @media (max-width: 1100px) {
+         #steps {
+            display:none;
+         }
+      }
+
   body(style="background-color : #E6E6FA")
     .jumbotron(style="padding-bottom : 0px; background-color:rgba(0,0,0,.075);  margin-bottom: 0px;  padding-top:10px;")
       h1.display-5(style="border-bottom:10px solid black;")
         | Solution Hunt Pack
       | Below are the relevant keywords for the selected challenge
-    ul.breadcrumb(style="margin-top:0px; width:100%")
-      li.completed
-        a
-          strong
-            | Step 1
-          | : Select the challenge
-      li.active
-        a
-          strong
-            | Step 2
-          | : Select Keywords
-      li
-        a
-          strong
-            | Step 3
-          | : Finetune
-      li
-        a
-          strong
-            | Step 4
-          | : Results
+    div(id='steps')
+      ul.breadcrumb(style="margin-top:0px; width:100%")
+        li.completed
+          a
+            strong
+              | Step 1
+            | : Select the challenge
+        li.active
+          a
+            strong
+              | Step 2
+            | : Select Keywords
+        li
+          a
+            strong
+              | Step 3
+            | : Finetune
+        li
+          a
+            strong
+              | Step 4
+            | : Results
 
     .container
       .panel.panel-default
@@ -147,7 +154,9 @@ html
             select(multiple="" data-role="tagsinput" name="keywords")
               each keyword,index in keywords
                 option(value=keyword style="font-size : 50px;")= keyword
-            | Click on box above to add more keywords.
+            br
+            span(style="font-size:12px;")
+              | Click on box above to add more keywords.
             button.btn.btn-primary(type="submit" style="float : right; margin-top:10px;") Submit
 
       div.alert.alert-warning(role="alert")

@@ -5,8 +5,13 @@ html
     link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap-theme.min.css")
     link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/css/bootstrap-slider.min.css")
     link(rel="stylesheet" href="custom.css")
+    link(rel="stylesheet" href="https://rubaxa.github.io/Ply/ply.css")
     script(src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js")
     script(src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/bootstrap-slider.min.js")
+    script(src="https://rubaxa.github.io/Sortable/Sortable.js")
+    script(src="https://rubaxa.github.io/Ply/Ply.min.js")
+    link(href='https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css', rel='stylesheet')
+    script(src='https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js')
     style.
       body {
       font-family: Algerian;
@@ -110,6 +115,7 @@ html
       h1.display-5(style="border-bottom:10px solid black;")
         | Solution Hunt Pack
       | Finetune the importance of keywords, and set the max time for crawling
+
     div(id='steps')
       ul.breadcrumb(style="margin-top:0px; width:100%")
         li.completed
@@ -152,26 +158,43 @@ html
             table.table
               thead.thead-inverse
                 tr
-                  th Keyword
-                  th Importance Score
+                  th Relative ranking of keywords
+                  th Other parameters
               tbody
-                each keyword,index in keywords
-                 tr
-                   td
-                     span
-                       = keyword
-                     input(name="keywords" value=keyword style="display:none;")
-                   td
-                     input(name=keyword+"_val" data-provide="slider" data-slider-id="ex1Slider" type="text" data-slider-min="1" data-slider-max=keywords.length data-slider-step="1" data-slider-value=keywords.length-index)
-
-            strong
-              | Set Time limit :
-            input#time_limit(name="time_slider" data-provide="slider" data-slider-id="ex1Slider" type="text" data-slider-min=10 data-slider-max=90 data-slider-step="1" data-slider-value=15)
-            br
-            | Ideal time to crawl results per keyword : 3 seconds
+                tr
+                  td(style="padding: 20px 20px;")
+                    span(style="font-size:12px;")
+                      | The keywords below are in decreasing order of priority.
+                      br
+                      | Drag and drop to re-arrange the order of keywords.
+                      br
+                      br
+                    #handle
+                    .block__list_words
+                      ul(id="keywords_list" style="list-style-type: none;")
+                        each keyword,index in keywords
+                          li(style="cursor : pointer; padding: 3px 10px; border-radius : 2px; background-color: #F5F3EE; border-bottom:1px solid black; border-left:1px solid black; margin-top:3px;")
+                            span.drag-handle &#9776;
+                            |
+                            |
+                            input(name="keywords_list" style="display : none;" value=keyword)
+                            = keyword
+                  td(style="padding: 20px 20px;")
+                    | Set Time limit :
+                    input#time_limit(name="time_slider" data-provide="slider" data-slider-id="ex1Slider" type="text" data-slider-min=10 data-slider-max=90 data-slider-step="1" data-slider-value=15)
+                    br
+                    span(style="font-size:12px;")
+                      | Ideal time to crawl results per keyword : 3 seconds
+                    br
+                    br
+                    | Select your crawler engine:
+                    |
+                    |
+                    input(name='engine' checked='' data-toggle='toggle' data-on='Google' data-off='Bing' data-onstyle='success' data-offstyle='primary' type='checkbox')
             button.btn.btn-primary#submit_button(type="submit" style="float : right; margin-top:10px;" onclick="start_timer()") Submit
     script(type="text/javascript").
-
+      var el = document.getElementById("keywords_list");
+      var sortable = Sortable.create(el);
       function start_timer(){
       document.getElementById('timer').innerHTML = document.getElementById('time_limit').value;
       document.getElementById('finetune_form').style.display = "none";

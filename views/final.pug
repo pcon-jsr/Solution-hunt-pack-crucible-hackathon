@@ -106,32 +106,39 @@ html
           z-index: 2;
       }
 
+      @media (max-width: 1100px) {
+         #steps {
+            display:none;
+         }
+      }
+
   body(style="background-color : #E6E6FA")
     .jumbotron(style="padding-bottom : 0px; background-color:rgba(0,0,0,.075);  margin-bottom: 0px;  padding-top:10px;")
       h1.display-5(style="border-bottom:10px solid black;")
         | Solution Hunt Pack
       | Yay!! Finally here are the results you wanted
-    ul.breadcrumb(style="margin-top:0px; width:100%")
-      li.completed
-        a
-          strong
-            | Step 1
-          | : Select the challenge
-      li.completed
-        a
-          strong
-            | Step 2
-          | : Select Keywords
-      li.completed
-        a
-          strong
-            | Step 3
-          | : Finetune
-      li.active
-        a
-          strong
-            | Step 4
-          | : Results
+    div(id='steps')
+      ul.breadcrumb(style="margin-top:0px; width:100%")
+        li.completed
+          a
+            strong
+              | Step 1
+            | : Select the challenge
+        li.completed
+          a
+            strong
+              | Step 2
+            | : Select Keywords
+        li.completed
+          a
+            strong
+              | Step 3
+            | : Finetune
+        li.active
+          a
+            strong
+              | Step 4
+            | : Results
     .container
       .panel.panel-primary
         .panel-heading

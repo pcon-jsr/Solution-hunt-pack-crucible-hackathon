@@ -24,7 +24,47 @@ def refresh():
     subprocess.check_output(['scrapy', 'crawl', 'spider1'])
     return ""
 
+
 @app.route("/final", methods=['POST'])
+def final():
+    arg = request.get_json()
+    keywords = arg['keywords']
+    time_limit = str(arg['time_limit'])
+    engine = str(arg['engine'])
+    file_name = ''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(12))
+
+
+    concatenated_keywords = ""
+    for i in range(len(keywords)-1):
+        concatenated_keywords = concatenated_keywords + keywords[i] + ","
+    concatenated_keywords = concatenated_keywords + keywords[len(keywords)-1]
+
+    print concatenated_keywords,engine,time_limit
+
+
+    '''
+    start_time = timeit.default_timer()
+    flag = random.randint(1,2)
+    if(flag==1):
+        print "google"
+        subprocess.call(['timeout',time_limit,'scrapy', 'crawl', 'spider2', '-a', 'query='+concatenated_keywords, '-o', 'temp/'+file_name+'.json'])
+    else:
+        print "bing"
+        subprocess.call(['timeout',time_limit,'scrapy', 'crawl', 'spider3', '-a', 'query='+concatenated_keywords, '-o', 'temp/'+file_name+'.json'])
+    elapsed = timeit.default_timer() - start_time
+    print elapsed/len(keyword_scores)'''
+
+    if(engine=='on'):
+        subprocess.call(['timeout',time_limit,'scrapy', 'crawl', 'spider2', '-a', 'query='+concatenated_keywords, '-o', 'temp/'+file_name+'.json'])
+    else:
+        subprocess.call(['timeout',time_limit,'scrapy', 'crawl', 'spider3', '-a', 'query='+concatenated_keywords, '-o', 'temp/'+file_name+'.json'])
+
+    #subprocess.call(['timeout',time_limit,'scrapy', 'crawl', 'spider2', '-a', 'query='+concatenated_keywords, '-o', 'temp/'+file_name+'.json'])
+    return file_name
+
+
+
+'''@app.route("/final", methods=['POST'])
 def final():
     arg = request.get_json()
     keyword_scores = arg['keyword_scores']
@@ -54,7 +94,7 @@ def final():
 
     #subprocess.call(['timeout',time_limit,'scrapy', 'crawl', 'spider2', '-a', 'query='+concatenated_keywords, '-o', 'temp/'+file_name+'.json'])
     return file_name
-
+'''
 
 temp = textacy.Doc(unicode('temp') , lang=unicode('en_core_web_sm'))
 @app.route("/keywords", methods=['POST'])
@@ -73,9 +113,9 @@ def keywords():
     keyword_string = ""
 
     for i,key in enumerate(sorted_keywords):
-        if(i==len(sorted_keywords)/2):
+        if(i==int(len(sorted_keywords)/2)):
             keyword_string = keyword_string + "||"
-        if(i==len(sorted_keywords)-1):
+        if(i==len(sorted_keywords)-1 or i==int(len(sorted_keywords)/2)-1):
             keyword_string = keyword_string + key[0]
         else:
             keyword_string = keyword_string + key[0] + ",,"

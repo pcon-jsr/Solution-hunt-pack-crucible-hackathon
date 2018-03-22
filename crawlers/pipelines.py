@@ -25,7 +25,7 @@ class MongoPipeline(object):
         self.client.close()
 
     def process_item(self, item, spider):
-        self.db[self.collection_name].insert(dict(item))
+        self.db[self.collection_name].update({'_id' : item['_id']},dict(item), upsert=True)
         return item
 
 class ValidatePipeline(object):

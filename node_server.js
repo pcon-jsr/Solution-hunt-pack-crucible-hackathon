@@ -13,7 +13,7 @@ var request = require('request');
 var sortJsonArray = require('sort-json-array');
 var util = require('util');
 var moment = require('moment');
-var error_file = fs.createWriteStream(__dirname + '/error.log', {flags : 'w'});
+var error_file = fs.createWriteStream(__dirname + '/error.log', {flags : 'a'});
 
 console.log_error = function(d) { //
   var time = moment();
@@ -150,7 +150,7 @@ app.post('/finetune', function(req, res){
   {
     res.render('error', {error_msg : "Please select two or more Keywords."});
   }
-  res.render('finetune', {keywords : keywords , challenge_title : challenge_title } );
+  res.render('finetune1', {keywords : keywords , challenge_title : challenge_title } );
   }
   catch(e)
   {
@@ -161,6 +161,49 @@ app.post('/finetune', function(req, res){
 });
 
 app.post('/final', function(req, res){
+  try
+  {
+    var keywords = req.body.keywords_list;
+    var challenge_title = req.body.challenge_title;
+    var engine = req.body.engine;
+    var time_limit = parseInt(req.body.time_slider);
+    if(engine==undefined)
+    {
+        engine = 'off';
+    }
+    request( {method : 'POST', url : "http://127.0.0.1:5000/final", json : {'keywords' : keywords, 'time_limit' : time_limit, 'engine' : engine} }, function(err, response, body){
+      try
+      {
+        ret = fs.readFileSync('temp/'+body+'.json');
+
+
+        ret_json = JSON.parse(ret);
+        ret_json_sorted = ret_json.sort(function(a,b){
+          return parseInt(b['score']) - parseInt(a['score'])
+        });
+        fs.unlinkSync('temp/'+body+'.json');
+        //console.log(body);
+        //console.log(ret_json);
+        //console.log(ret_json_sorted);
+        res.render('final', {results : ret_json_sorted, challenge_title : challenge_title });
+      }
+      catch(e)
+      {
+        console.log_error(e);
+        res.render('error', {error_msg : "Error loading the results."});
+      }
+    });
+  }
+  catch(e)
+  {
+    console.log_error(e);
+    res.render('error', {error_msg : "Error loading the results."});
+  }
+
+});
+
+
+/*app.post('/final', function(req, res){
   try
   {
     var keywords = req.body.keywords;
@@ -201,7 +244,7 @@ app.post('/final', function(req, res){
     res.render('error', {error_msg : "Error loading the results."});
   }
 
-});
+});*/
 
 
 /*
